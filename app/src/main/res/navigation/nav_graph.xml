@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splash_screen">
+
+    <fragment
+        android:id="@+id/splash_screen"
+        android:name="com.meu.stock.views.SplashScreen"
+        android:label="SplashScreen" />
+
+</navigation>
