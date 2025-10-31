@@ -1,5 +1,6 @@
 package com.meu.stock.views.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -85,8 +86,14 @@ fun ProductListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                //productId={productId}&categoryId={categoryId},
+                Log.d("TAG", "productId=${product.id.toString()}&categoryId=${product.categoryId}")
+                val productId = product.id ?: 0
+                val categoryId = product.categoryId
+                val content = "productId=$productId&categoryId=$categoryId"
+
                 QrCodeImage(
-                    content = product.id.toString(),
+                    content = content,
                     modifier = Modifier.size(40.dp).clickable(onClick = onPrintClick),
                     size = 250
                 )

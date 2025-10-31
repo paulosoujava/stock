@@ -1,8 +1,10 @@
 package com.meu.stock
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -160,27 +162,39 @@ fun AppNavigation() {
                 navArgument("name") { type = NavType.StringType; nullable = true },
                 navArgument("desc") { type = NavType.StringType; nullable = true },
                 navArgument("price") { type = NavType.StringType; nullable = true },
-                navArgument("id") { type = NavType.StringType; nullable = true }
+                navArgument("id") { type = NavType.StringType; nullable = true },
+                navArgument("categoryId") { type = NavType.StringType; nullable = true },
             )
         ) { backStackEntry ->
             val name = backStackEntry.arguments?.getString("name")?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
             val desc = backStackEntry.arguments?.getString("desc")?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
             val price = backStackEntry.arguments?.getString("price")
             val id = backStackEntry.arguments?.getString("id")
+            val categoryId = backStackEntry.arguments?.getString("categoryId")
 
             PrintScreen(
                 navController = navController,
                 productName = name,
                 productDescription = desc,
                 productPrice = price,
-                productId = id
+                productId = id,
+                categoryId= categoryId
             )
         }
 
         composable(AppRoutes.SCANNER) {
             ScannerScreen(
-                onQrCodeScanned = { productId ->
-                    navController.navigate("${AppRoutes.PRODUCT_FORM}?productId=$productId") {
+                onQrCodeScanned = { route ->
+                    val params = route.split("&").associate {
+                        val (key, value) = it.split("=")
+                        key to value
+                    }
+                    val productId = params["productId"]
+                    val categoryId = params["categoryId"]
+
+                    Log.d("ScannerScreen", "${AppRoutes.PRODUCT_FORM}?productId=$productId&categoryId=$categoryId")
+
+                    navController.navigate("${AppRoutes.PRODUCT_FORM}?productId=$productId&categoryId=$categoryId") {
                         popUpTo(AppRoutes.SCANNER) { inclusive = true }
                     }
                 }

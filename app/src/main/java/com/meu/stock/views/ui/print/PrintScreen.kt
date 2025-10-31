@@ -64,9 +64,14 @@ fun PrintScreen(
     productName: String?,
     productDescription: String?,
     productPrice: String?,
-    productId: String?
+    productId: String?,
+    categoryId: String? = null
 ) {
     val context = LocalContext.current
+    val qrContent = "productId=$productId&categoryId=${categoryId ?: 0}"
+
+    Log.d("PrintScreen", "QR Content: $qrContent")
+
 
     Scaffold(
         topBar = {
@@ -99,7 +104,7 @@ fun PrintScreen(
                 )
                 {
                     QrCodeImage(
-                        content = productId,
+                        content = qrContent,
                         size = 180,
                         modifier = Modifier.size(80.dp)
                     )
@@ -110,7 +115,7 @@ fun PrintScreen(
                     Button(onClick = {
                         // Gera bitmap do QR
                         val qrBitmap = try {
-                            generateQrCodeBitmap(productId ?: "")
+                            generateQrCodeBitmap(qrContent ?: "")
                         } catch (e: Exception) {
                             e.printStackTrace()
                             null
@@ -165,8 +170,9 @@ fun PrintScreen(
                             textAlign = TextAlign.Justify,
                             modifier = Modifier.weight(1f)
                         )
+
                         QrCodeImage(
-                            content = productId,
+                            content = qrContent,
                             size = 180,
                             modifier = Modifier.size(80.dp)
                         )
@@ -212,7 +218,6 @@ fun PrintScreen(
                         Nome: ${productName ?: "Produto sem nome"}
                         Descrição: ${productDescription ?: ""}
                         Preço: R$ ${productPrice ?: ""}
-                        ID: ${productId ?: ""}
                     """.trimIndent()
 
                     if (qrBitmap != null) {
@@ -291,10 +296,19 @@ fun sendImageIntent(context: Context, imageUri: Uri, chooserTitle: String) {
         type = "image/png"
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
+
     val chooser = Intent.createChooser(sendIntent, chooserTitle)
-    // startActivity de um Context normal
+
+    // Concede permissão temporária de leitura a todos os apps que podem abrir o chooser
+    val resInfoList = context.packageManager.queryIntentActivities(chooser, 0)
+    for (resolveInfo in resInfoList) {
+        val packageName = resolveInfo.activityInfo.packageName
+        context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+
     context.startActivity(chooser)
 }
+
 
 /**
  * Envia texto (EXTRA_TEXT)

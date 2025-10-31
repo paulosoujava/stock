@@ -1,5 +1,6 @@
 package com.meu.stock.views.ui.screens.products.product.create
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToLong
 
-// ViewModel Reescrito para Corrigir o Carregamento de Dados
+
 @HiltViewModel
 class ProductFormViewModel @Inject constructor(
     private val saveProductUseCase: SaveProductUseCase,
@@ -29,7 +30,9 @@ class ProductFormViewModel @Inject constructor(
 
     private val productId: Long? = savedStateHandle.get<String>("productId")?.toLongOrNull()
 
+
     init {
+        Log.d("ProductFormViewModel", "productId: $productId")
         viewModelScope.launch {
             if (productId != null) {
                 _uiState.update {
