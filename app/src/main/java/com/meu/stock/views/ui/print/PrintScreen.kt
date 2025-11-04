@@ -215,9 +215,9 @@ fun PrintScreen(
 
                     // Monta texto com os dados
                     val productInfo = """
-                        Nome: ${productName ?: "Produto sem nome"}
-                        Descrição: ${productDescription ?: ""}
-                        Preço: R$ ${productPrice ?: ""}
+                         ${productName ?: "Produto sem nome"}
+                         ${productDescription ?: ""}
+                         R$ ${productPrice ?: ""}
                     """.trimIndent()
 
                     if (qrBitmap != null) {
@@ -244,11 +244,6 @@ fun PrintScreen(
     }
 }
 
-/**
- * Gera um Bitmap de QR code usando ZXing.
- * Adicione no build.gradle (module):
- * implementation "com.google.zxing:core:3.5.1"
- */
 fun generateQrCodeBitmap(content: String, size: Int = 512): Bitmap {
     val writer = QRCodeWriter()
     val bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, size, size)

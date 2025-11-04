@@ -322,7 +322,7 @@ fun LoginScreen(
                             fontWeight = FontWeight.Bold
                         )
                     ) {
-                        append("solicite a sua") // NOVO TEXTO
+                        append("solicite a seu acesso.")
                     }
                     pop() // Remove a anotação do link
                 }

@@ -84,6 +84,13 @@ interface SaleHistoryDao {
     """)
     fun getRawSalesData(): Flow<List<RawSaleData>>
 
+    // Funções reativas para observar mudanças
+    @Query("SELECT * FROM sale_years WHERE year = :year")
+    fun getYearFlow(year: Int): Flow<YearEntity?>
+
+    @Query("SELECT * FROM sale_months WHERE month = :month AND yearId = :yearId")
+    fun getMonthFlow(month: Int, yearId: Long): Flow<MonthEntity?>
+
     // TEMPORÁRIO ao seu SaleHistoryDao.kt
     @Query("SELECT saleItemsJson FROM sales WHERE saleItemsJson IS NOT NULL AND saleItemsJson != ''")
     fun debugGetRawJsonStrings(): List<String>

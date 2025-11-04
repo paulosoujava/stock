@@ -106,40 +106,33 @@ class SaleHistoryRepositoryImpl @Inject constructor(
     }
 
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getCurrentMonthSummary(): Flow<MonthlySummary> {
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonthInt = calendar.get(Calendar.MONTH) + 1
-
         val monthName = getMonthName(currentMonthInt)
 
-        // Usamos flow para criar um fluxo que busca os dados
-        return flow {
-            // 1. Tenta encontrar o ano atual no banco
-            val yearEntity = saleHistoryDao.getYear(currentYear)
+        // Corrente reativa que observa o ano
+        return saleHistoryDao.getYearFlow(currentYear).flatMapLatest { yearEntity ->
             if (yearEntity == null) {
-                // Se o ano não existe, não há vendas, emite um resumo zerado
-                emit(MonthlySummary(currentYear, monthName, 0.0, 0))
-                return@flow
-            }
-
-            // 2. Se o ano existe, tenta encontrar o mês atual
-            val monthEntity = saleHistoryDao.getMonth(currentMonthInt, yearEntity.id)
-            if (monthEntity == null) {
-                // Se o mês não existe, não há vendas, emite um resumo zerado
-                emit(MonthlySummary(currentYear, monthName, 0.0, 0))
-                return@flow
-            }
-
-            // 3. Se o mês existe, busca todas as vendas dele
-            saleHistoryDao.getSalesForMonth(monthEntity.id).collect { sales ->
-                // Calcula o total a partir das vendas
-                val total = calculateTotalFromSales(sales)
-                // Conta o número de vendas
-                val count = sales.size
-
-                // Emite o resumo completo
-                emit(MonthlySummary(currentYear, monthName, total, count))
+                // Se o ano não existe, não há vendas. Retorna um fluxo com resumo zerado.
+                flowOf(MonthlySummary(currentYear, monthName, 0.0, 0))
+            } else {
+                // Se o ano existe, observa o mês
+                saleHistoryDao.getMonthFlow(currentMonthInt, yearEntity.id).flatMapLatest { monthEntity ->
+                    if (monthEntity == null) {
+                        // Se o mês não existe, não há vendas. Retorna resumo zerado.
+                        flowOf(MonthlySummary(currentYear, monthName, 0.0, 0))
+                    } else {
+                        // Se o mês existe, observa as vendas e mapeia para o resumo
+                        saleHistoryDao.getSalesForMonth(monthEntity.id).map { sales ->
+                            val total = sales.sumOf { it.totalAmount } // Usa o totalAmount já salvo
+                            val count = sales.size
+                            MonthlySummary(currentYear, monthName, total, count)
+                        }
+                    }
+                }
             }
         }
     }

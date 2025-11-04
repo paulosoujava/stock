@@ -223,7 +223,7 @@ fun HomeScreen(
             }
             item {
                 DashboardCard(
-                    title = "Notes",
+                    title = "Lembretes",
                     icon = Icons.AutoMirrored.Filled.Notes,
                     count = noteCount,
                     subtitle = "Crie notas para não esquecer de mais nada.",
