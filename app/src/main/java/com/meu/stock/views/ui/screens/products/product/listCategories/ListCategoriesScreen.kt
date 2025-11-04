@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +31,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meu.stock.model.Category
 import com.meu.stock.ui.theme.StockTheme
+import com.meu.stock.views.ui.components.CountBadge
 import com.meu.stock.views.ui.components.DefaultTabBar
 import com.meu.stock.views.ui.routes.AppRoutes
 import com.meu.stock.views.ui.utils.generateRandomPastelColor
@@ -99,6 +101,7 @@ private fun Show() {
                 id = "",
                 name = "Frutas",
                 description = "Frutas",
+                productCount = 1
 
             ),
             onClick = {})
@@ -111,43 +114,65 @@ private fun CategoryListItem(
     onClick: () -> Unit
 ) {
     val randomColor = remember(category.id) { generateRandomPastelColor() }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ) {
+
+    Box{
+        Card(
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
+            elevation = CardDefaults.cardElevation(2.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
+
+        )
+        {
+            Row(
+                modifier = Modifier
+                    .height(60.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(40.dp)
+                        .background(
+                            randomColor
+                        ),
+                    contentAlignment = Alignment.Center,
+
+                    ){
+                    Text(
+                        text = category.name.firstOrNull()?.toString()?.uppercase() ?: "",
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Text(
+                        text = category.name.uppercase(),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontSize = 20.sp,
+                    )
+
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Ver detalhes")
+            }
+        }
         Row(
             modifier = Modifier
-                .height(60.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(40.dp)
-                    .background(
-                        randomColor
-                    ),
-                contentAlignment = Alignment.Center,
+                .padding(end = 6.dp)
+                .align(Alignment.TopEnd)
 
-            ){
-                Text(
-                    text = category.name.firstOrNull()?.toString() ?: "",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
-                )
+        ) {
+            if (category.productCount > 0) {
+                CountBadge(count = category.productCount)
             }
-            Text(
-                text = category.name,
-                style = MaterialTheme.typography.titleLarge,
-                fontSize = 20.sp,
-            )
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Ver detalhes")
         }
+
     }
+
 }
 
 @Composable

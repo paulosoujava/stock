@@ -6,5 +6,6 @@ package com.meu.stock.model
 data class Category(
     var id: String?,
     val name: String,
-    val description: String
+    val description: String,
+    val productCount: Int = 0
 )

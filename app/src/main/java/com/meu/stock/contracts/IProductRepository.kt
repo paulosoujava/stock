@@ -13,4 +13,6 @@ interface IProductRepository {
     fun getLowStockProducts(): Flow<List<Product>>
     suspend fun updateStockQuantity(productId: Long, newStockQuantity: Int)
     fun getAllProducts(): Flow<List<Product>>
+
+
 }

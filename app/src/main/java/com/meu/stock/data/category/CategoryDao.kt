@@ -28,7 +28,7 @@ interface CategoryDao {
     fun getCategoryById(categoryId: Long): Flow<CategoryEntity?>
 
     @Query("SELECT * FROM categories ORDER BY name ASC")
-    fun getAll(): Flow<List<Category>>
+    fun getAll(): Flow<List<CategoryEntity>>
 
     @Query("SELECT COUNT(id) FROM categories")
     fun getCategoryCount(): Flow<Int>
