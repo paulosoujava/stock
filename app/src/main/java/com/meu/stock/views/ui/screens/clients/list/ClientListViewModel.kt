@@ -1,6 +1,7 @@
 package com.meu.stock.views.ui.screens.clients.list
 
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
@@ -23,7 +25,7 @@ import kotlin.text.contains
 @HiltViewModel
 class ClientListViewModel @Inject constructor(
     private val clientRepository: IClientRepository,
-    private val getClientsUseCase: IGetClientsUseCase
+    private val getClientsUseCase: IGetClientsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ClientListState())
@@ -33,7 +35,10 @@ class ClientListViewModel @Inject constructor(
         clients.sortedBy { it.name }
     }
 
+
+
     init {
+
         viewModelScope.launch {
             combine(clientsFlow, _uiState) { clients, state ->
                 val filteredList = if (state.searchQuery.isBlank()) {
@@ -60,15 +65,34 @@ class ClientListViewModel @Inject constructor(
     }
 
 
+    fun searchThisClientNavigation(preSearchQuery: String?) {
+        if (!preSearchQuery.isNullOrBlank()) {
+            viewModelScope.launch {
+                _uiState.update {
+                    it.copy(
+                        isSearchActive = true,
+                        searchQuery = preSearchQuery,
+                        // Opcional, mas recomendado: avisa a UI qual cliente expandir
+                        clientNameToExpand = preSearchQuery
+                    )
+                }
+            }
+        }
+    }
+
+
     fun toggleSearchVisibility() {
         _uiState.update { currentState ->
             val isVisible = currentState.isSearchActive
             currentState.copy(
                 isSearchActive = !isVisible,
-                searchQuery = if (isVisible) "" else currentState.searchQuery
+                searchQuery = if (isVisible) "" else currentState.searchQuery,
+                clientNameToExpand = if (isVisible) null else currentState.clientNameToExpand
             )
         }
+
     }
+
     fun onSearchQueryChange(query: String) {
         _uiState.update { it.copy(searchQuery = query) }
     }

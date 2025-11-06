@@ -1,4 +1,4 @@
-package com.meu.stock.data.note
+package com.meu.stock.bd.note
 
 
 import androidx.room.*

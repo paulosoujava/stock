@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +43,7 @@ import kotlinx.coroutines.launch
 fun ClientListScreen(
     navController: NavController,
     isSelectionMode: Boolean,
+    clientNameToExpand: String?,
     viewModel: ClientListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -49,6 +52,9 @@ fun ClientListScreen(
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
+    LaunchedEffect(clientNameToExpand) {
+        viewModel.searchThisClientNavigation(clientNameToExpand)
+    }
 
     if (clientIdToDelete != null && clientNameToDelete != null) {
         AlertDialog(
@@ -89,17 +95,18 @@ fun ClientListScreen(
                             enter = fadeIn(),
                             exit = fadeOut()
                         ) {
-                            IconButton(onClick = {
-                                viewModel.toggleSearchVisibility()
-                                coroutineScope.launch {
-                                    listState.animateScrollToItem(index = 0)
+                            if (uiState.clientNameToExpand.isNullOrEmpty())
+                                IconButton(onClick = {
+                                    viewModel.toggleSearchVisibility()
+                                    coroutineScope.launch {
+                                        listState.animateScrollToItem(index = 0)
+                                    }
+                                }) {
+                                    Icon(
+                                        Icons.Default.Search,
+                                        contentDescription = "Pesquisar Clientes"
+                                    )
                                 }
-                            }) {
-                                Icon(
-                                    Icons.Default.Search,
-                                    contentDescription = "Pesquisar Clientes"
-                                )
-                            }
                         }
 
                     }
@@ -109,11 +116,12 @@ fun ClientListScreen(
 
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate(AppRoutes.CLIENT_FORM) }
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Adicionar Cliente")
-            }
+            if (uiState.clientNameToExpand.isNullOrEmpty())
+                FloatingActionButton(
+                    onClick = { navController.navigate(AppRoutes.CLIENT_FORM) }
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Adicionar Cliente")
+                }
         }
     ) { paddingValues ->
         Box(
@@ -138,22 +146,24 @@ fun ClientListScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         item {
-                            AnimatedVisibility(
-                                visible = uiState.isSearchActive,
-                                enter = fadeIn(),
-                                exit = fadeOut()
-                            ) {
-                                SearchAppBar(
-                                    query = uiState.searchQuery,
-                                    onQueryChange = viewModel::onSearchQueryChange,
-                                    onClose = viewModel::toggleSearchVisibility
-                                )
-                            }
+                            if (uiState.clientNameToExpand.isNullOrEmpty())
+                                AnimatedVisibility(
+                                    visible = uiState.isSearchActive,
+                                    enter = fadeIn(),
+                                    exit = fadeOut()
+                                ) {
+                                    SearchAppBar(
+                                        query = uiState.searchQuery,
+                                        onQueryChange = viewModel::onSearchQueryChange,
+                                        onClose = viewModel::toggleSearchVisibility
+                                    )
+                                }
                         }
                         items(uiState.clients, key = { it.id }) { client ->
                             ClientListItem(
                                 client = client,
                                 isSelectionMode = isSelectionMode,
+                                startExpanded = uiState.clientNameToExpand != null && uiState.clientNameToExpand!!.isNotEmpty(),
                                 onEditClick = { clientId ->
                                     navController.navigate("${AppRoutes.CLIENT_FORM}?clientId=$clientId")
                                 },

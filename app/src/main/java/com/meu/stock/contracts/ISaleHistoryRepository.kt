@@ -1,6 +1,6 @@
 package com.meu.stock.contracts
 
-import com.meu.stock.data.sale.RawSaleData
+import com.meu.stock.bd.sale.RawSaleData
 import com.meu.stock.model.MonthlySummary
 import com.meu.stock.model.SaleItem
 import com.meu.stock.model.SalesYear

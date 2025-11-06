@@ -1,9 +1,9 @@
-package com.meu.stock.data.sale
+package com.meu.stock.bd.sale
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.meu.stock.data.month.MonthEntity
+import com.meu.stock.bd.month.MonthEntity
 import java.util.Date
 
 @Entity(

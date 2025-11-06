@@ -1,8 +1,8 @@
 package com.meu.stock.repositories
 
 import com.meu.stock.contracts.IProductRepository
-import com.meu.stock.data.category.CategoryDao
-import com.meu.stock.data.product.ProductDao
+import com.meu.stock.bd.category.CategoryDao
+import com.meu.stock.bd.product.ProductDao
 import com.meu.stock.mappers.toEntity
 import com.meu.stock.mappers.toProduct
 import com.meu.stock.model.Product

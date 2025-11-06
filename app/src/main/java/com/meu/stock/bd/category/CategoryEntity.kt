@@ -1,4 +1,4 @@
-package com.meu.stock.data.category
+package com.meu.stock.bd.category
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.meu.stock.data.client
+package com.meu.stock.bd.client
 
 
 import androidx.room.Dao

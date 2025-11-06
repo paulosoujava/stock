@@ -46,14 +46,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meu.stock.model.BestSellingProductInfo
 import com.meu.stock.model.CustomerInfo
+import com.meu.stock.views.ui.routes.AppRoutes
 import com.meu.stock.views.ui.utils.generateRandomPastelColor
 
 
@@ -109,7 +112,7 @@ fun BestSellersScreen(
                     )
                 }
                 else -> {
-                    BestSellersList(items = uiState.bestSellers)
+                    BestSellersList(items = uiState.bestSellers, navController)
                 }
             }
         }
@@ -117,20 +120,19 @@ fun BestSellersScreen(
 }
 
 @Composable
-private fun BestSellersList(items: List<BestSellingProductInfo>) { // AJUSTE: Usa o modelo correto
+private fun BestSellersList(items: List<BestSellingProductInfo>, navController: NavController) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(16.dp)
     ) {
         itemsIndexed(items) { index, item ->
-            BestSellerItemCard(item = item, rank = index + 1)
+            BestSellerItemCard(item = item, rank = index + 1, navController = navController)
         }
     }
 }
 
 @Composable
-private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int) { // AJUSTE: Usa o modelo correto
-    // AJUSTE: Estado para controlar se o card está expandido ou não
+private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int, navController: NavController) {
     var isExpanded by remember { mutableStateOf(false) }
 
     Card(
@@ -153,7 +155,7 @@ private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int) { // AJU
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "$rank", // AJUSTE: Voltei com o "º" para indicar o ranking
+                    text = "$rank",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
@@ -163,7 +165,7 @@ private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int) { // AJU
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = item.productName,
+                        text = item.productName.split(' ').joinToString(" ") { it.replaceFirstChar(Char::titlecase) },
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -196,7 +198,7 @@ private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int) { // AJU
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(
-                                text = "ver compradores",
+                                text = "compradores",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.Blue,
                             )
@@ -211,20 +213,19 @@ private fun BestSellerItemCard(item: BestSellingProductInfo, rank: Int) { // AJU
 
                 }
             }
-            // AJUSTE: Conteúdo expansível que mostra a lista de clientes
             AnimatedVisibility(
                 visible = isExpanded,
                 enter = expandVertically(animationSpec = tween(durationMillis = 300)),
                 exit = shrinkVertically(animationSpec = tween(durationMillis = 300))
             ) {
-                CustomerList(customers = item.customers)
+                CustomerList(customers = item.customers, navController = navController)
             }
         }
     }
 }
 
 @Composable
-private fun CustomerList(customers: List<CustomerInfo>) {
+private fun CustomerList(customers: List<CustomerInfo>, navController: NavController) {
     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)) {
         HorizontalDivider(modifier = Modifier.padding(bottom = 12.dp))
         Text(
@@ -234,11 +235,88 @@ private fun CustomerList(customers: List<CustomerInfo>) {
             modifier = Modifier.padding(bottom = 8.dp)
         )
         customers.forEach { customer ->
-            Text(
-                text = "• ${customer.customerName} (ID: ${customer.customerId})",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 16.dp)
+            Row(
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate("client_list?isSelectionMode=false&searchQuery=${customer.customerName}")
+                    }
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "• ${customer.customerName.uppercase()} (ID: ${customer.customerId})",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Blue,
+                    modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 10.dp)
+
+                )
+                Text(
+                    text = "▶",
+                    fontSize = 9.sp,
+                    color = Color.Blue,
+                    modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 10.dp)
+                )
+            }
+
+        }
+    }
+}
+
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+private fun BestSellersScreenPreview() {
+    val fakeItems = listOf(
+        BestSellingProductInfo(
+            productId = 1L,
+            productName = "cadeira gamer xpto",
+            totalSalesCount = 42,
+            customers = listOf(
+                CustomerInfo(customerId = 101, customerName = "ana beatriz"),
+                CustomerInfo(customerId = 102, customerName = "carlos eduardo")
             )
+        ),
+        BestSellingProductInfo(
+            productId = 2L,
+            productName = "Monitor UltraWide 34\"",
+            totalSalesCount = 27,
+            customers = listOf(
+                CustomerInfo(customerId = 103, customerName = "Fernanda Lima"),
+                CustomerInfo(customerId = 101, customerName = "Ana Beatriz")
+            )
+        ),
+        BestSellingProductInfo(
+            productId = 3L,
+            productName = "Teclado Mecânico RGB",
+            totalSalesCount = 15,
+            customers = listOf(
+                CustomerInfo(customerId = 104, customerName = "Ricardo Mendes")
+            )
+        )
+    )
+
+    // Para simular a tela inteira, envolvemos a lista em um Scaffold.
+    Scaffold(
+        topBar = {
+            Column {
+                TopAppBar(
+                    title = { Text("Produtos mais vendidos") },
+                    navigationIcon = {
+                        IconButton(onClick = { }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+                        }
+                    }
+                )
+                HorizontalDivider()
+            }
+        }
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            BestSellersList(items = fakeItems, navController = NavController(LocalContext.current))
         }
     }
 }

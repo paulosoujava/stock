@@ -1,20 +1,20 @@
-package com.meu.stock.data
+package com.meu.stock.bd
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.meu.stock.data.category.CategoryDao
-import com.meu.stock.data.category.CategoryEntity
-import com.meu.stock.data.client.ClientDao
-import com.meu.stock.data.client.ClientEntity
-import com.meu.stock.data.month.MonthEntity
-import com.meu.stock.data.note.NoteDao
-import com.meu.stock.data.note.NoteEntity
-import com.meu.stock.data.product.ProductDao
-import com.meu.stock.data.product.ProductEntity
-import com.meu.stock.data.sale.SaleEntity
-import com.meu.stock.data.sale.SaleHistoryDao
-import com.meu.stock.data.year.YearEntity
+import com.meu.stock.bd.category.CategoryDao
+import com.meu.stock.bd.category.CategoryEntity
+import com.meu.stock.bd.client.ClientDao
+import com.meu.stock.bd.client.ClientEntity
+import com.meu.stock.bd.month.MonthEntity
+import com.meu.stock.bd.note.NoteDao
+import com.meu.stock.bd.note.NoteEntity
+import com.meu.stock.bd.product.ProductDao
+import com.meu.stock.bd.product.ProductEntity
+import com.meu.stock.bd.sale.SaleEntity
+import com.meu.stock.bd.sale.SaleHistoryDao
+import com.meu.stock.bd.year.YearEntity
 import com.meu.stock.views.ui.utils.Converters
 
 @Database(

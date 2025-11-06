@@ -1,8 +1,8 @@
 package com.meu.stock.repositories
 
 import com.meu.stock.contracts.IClientRepository
-import com.meu.stock.data.client.ClientDao
-import com.meu.stock.data.client.ClientEntity
+import com.meu.stock.bd.client.ClientDao
+import com.meu.stock.bd.client.ClientEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

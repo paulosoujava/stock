@@ -1,6 +1,6 @@
 package com.meu.stock.contracts
 
-import com.meu.stock.data.client.ClientEntity
+import com.meu.stock.bd.client.ClientEntity
 import kotlinx.coroutines.flow.Flow
 
 /**

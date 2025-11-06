@@ -1,11 +1,9 @@
 package com.meu.stock.mappers
 
-import androidx.compose.ui.autofill.ContentDataType
-import androidx.compose.ui.text.intl.Locale
-import com.meu.stock.data.category.CategoryEntity
-import com.meu.stock.data.client.ClientEntity
-import com.meu.stock.data.note.NoteEntity
-import com.meu.stock.data.product.ProductEntity
+import com.meu.stock.bd.category.CategoryEntity
+import com.meu.stock.bd.client.ClientEntity
+import com.meu.stock.bd.note.NoteEntity
+import com.meu.stock.bd.product.ProductEntity
 import com.meu.stock.model.Category
 import com.meu.stock.model.Client
 import com.meu.stock.model.Note

@@ -1,12 +1,10 @@
-package com.meu.stock.data.category
+package com.meu.stock.bd.category
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import androidx.room.Upsert
-import com.meu.stock.model.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao

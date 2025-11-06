@@ -1,4 +1,4 @@
-package com.meu.stock.data.year
+package com.meu.stock.bd.year
 
 import androidx.room.Entity
 import androidx.room.Index

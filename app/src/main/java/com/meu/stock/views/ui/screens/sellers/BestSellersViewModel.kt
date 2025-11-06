@@ -3,7 +3,6 @@ package com.meu.stock.views.ui.screens.sellers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.views.ui.screens.sellers.BestSellersUiState
 import com.meu.stock.usecases.GetBestSellingItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BestSellersViewModel @Inject constructor(
     private val getBestSellingItemsUseCase: GetBestSellingItemsUseCase,
-    private val saleHistoryDao: com.meu.stock.data.sale.SaleHistoryDao
+    private val saleHistoryDao: com.meu.stock.bd.sale.SaleHistoryDao
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BestSellersUiState())

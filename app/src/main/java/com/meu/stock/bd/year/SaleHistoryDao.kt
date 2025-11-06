@@ -1,9 +1,9 @@
-package com.meu.stock.data.year
+package com.meu.stock.bd.year
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.meu.stock.data.month.MonthEntity
-import com.meu.stock.data.sale.SaleEntity
+import com.meu.stock.bd.month.MonthEntity
+import com.meu.stock.bd.sale.SaleEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

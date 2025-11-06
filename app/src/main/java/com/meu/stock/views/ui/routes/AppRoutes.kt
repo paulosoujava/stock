@@ -4,7 +4,7 @@ object AppRoutes {
     const val SPLASH = "splash"
     const val LOGIN = "login"
     const val MAIN = "main"
-    const val CLIENT_LIST = "client_list?isSelectionMode={isSelectionMode}"
+    const val CLIENT_LIST = "client_list?isSelectionMode={isSelectionMode}&searchQuery={searchQuery}"
     const val CLIENT_FORM = "client_form"
     const val SALES_YEAR_LIST = "sales_year_list"
     const val SALE_FORM = "sale_form"

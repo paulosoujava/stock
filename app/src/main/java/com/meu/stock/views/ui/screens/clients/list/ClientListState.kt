@@ -7,5 +7,6 @@ data class ClientListState(
     val clients: List<Client> = emptyList(),
     val errorMessage: String? = null,
     val isSearchActive: Boolean = false, // Controla se a barra de pesquisa está visível
-    val searchQuery: String = "" // Armazena o texto da pesquisa
+    val searchQuery: String = "", // Armazena o texto da pesquisa
+    val clientNameToExpand: String? = null
 )

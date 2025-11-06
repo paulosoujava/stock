@@ -1,10 +1,10 @@
-package com.meu.stock.data.month
+package com.meu.stock.bd.month
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.meu.stock.data.year.YearEntity
+import com.meu.stock.bd.year.YearEntity
 
 @Entity(
     tableName = "sale_months",

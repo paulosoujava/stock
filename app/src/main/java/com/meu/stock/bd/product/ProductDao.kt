@@ -1,9 +1,8 @@
-package com.meu.stock.data.product
+package com.meu.stock.bd.product
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.meu.stock.data.product.ProductEntity
 import com.meu.stock.model.Product
 import kotlinx.coroutines.flow.Flow
 

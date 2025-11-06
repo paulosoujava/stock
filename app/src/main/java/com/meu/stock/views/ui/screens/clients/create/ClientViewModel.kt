@@ -3,7 +3,7 @@ package com.meu.stock.views.ui.screens.clients.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meu.stock.repositories.ClientRepositoryImpl
-import com.meu.stock.data.client.ClientEntity
+import com.meu.stock.bd.client.ClientEntity
 import com.meu.stock.usecases.GetClientByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

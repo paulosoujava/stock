@@ -1,11 +1,11 @@
-package com.meu.stock.data.sale
+package com.meu.stock.bd.sale
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.meu.stock.data.month.MonthEntity
-import com.meu.stock.data.year.YearEntity
+import com.meu.stock.bd.month.MonthEntity
+import com.meu.stock.bd.year.YearEntity
 import kotlinx.coroutines.flow.Flow
 
 

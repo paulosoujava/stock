@@ -1,18 +1,15 @@
 package com.meu.stock.repositories
 
-import androidx.compose.ui.geometry.isEmpty
-import androidx.compose.ui.input.key.type
-
 import java.util.Locale
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.meu.stock.contracts.IProductRepository
 import com.meu.stock.contracts.ISaleHistoryRepository
-import com.meu.stock.data.month.MonthEntity
-import com.meu.stock.data.sale.RawSaleData
-import com.meu.stock.data.sale.SaleEntity
-import com.meu.stock.data.sale.SaleHistoryDao
-import com.meu.stock.data.year.YearEntity
+import com.meu.stock.bd.month.MonthEntity
+import com.meu.stock.bd.sale.RawSaleData
+import com.meu.stock.bd.sale.SaleEntity
+import com.meu.stock.bd.sale.SaleHistoryDao
+import com.meu.stock.bd.year.YearEntity
 import com.meu.stock.model.MonthlySummary
 import com.meu.stock.model.SaleItem
 import com.meu.stock.model.SalesMonth
@@ -21,11 +18,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.text.DateFormatSymbols
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import javax.inject.Inject
 

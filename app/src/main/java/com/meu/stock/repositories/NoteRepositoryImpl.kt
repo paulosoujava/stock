@@ -2,7 +2,7 @@ package com.meu.stock.repositories
 
 
 import com.meu.stock.contracts.INoteRepository
-import com.meu.stock.data.note.NoteDao
+import com.meu.stock.bd.note.NoteDao
 import com.meu.stock.mappers.toNote
 import com.meu.stock.mappers.toNoteEntity
 import com.meu.stock.model.Note

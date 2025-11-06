@@ -113,7 +113,7 @@ class HomeViewModel @Inject constructor(
 
     fun onCardClicked(cardTitle: String, navController: NavController) {
         when (cardTitle) {
-            AppRoutes.CLIENT_LIST -> navController.navigate(AppRoutes.CLIENT_LIST)
+            AppRoutes.CLIENT_LIST -> navController.navigate("client_list?isSelectionMode=false")
             AppRoutes.SALES_YEAR_LIST -> navController.navigate(AppRoutes.SALES_YEAR_LIST)
             AppRoutes.PRODUCT_FORM -> navController.navigate(AppRoutes.PRODUCT_FORM)
             AppRoutes.CATEGORY_LIST -> navController.navigate(AppRoutes.CATEGORY_LIST)

@@ -84,6 +84,7 @@ fun ClientListItem(
     modifier: Modifier = Modifier,
     client: Client,
     isSelectionMode: Boolean,
+    startExpanded: Boolean = false,
     onEditClick: (String) -> Unit,
     onDeleteClick: (String) -> Unit,
     onSelectClick: () -> Unit
@@ -96,7 +97,7 @@ fun ClientListItem(
     val formattedPhone =
         phoneFormatter.filter(androidx.compose.ui.text.AnnotatedString(client.phone)).text.toString()
 
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(startExpanded) }
 
     Card(
         modifier = modifier
@@ -117,7 +118,7 @@ fun ClientListItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { isExpanded = !isExpanded } // O clique aqui expande/recolhe
+                    .clickable { isExpanded = !isExpanded }
                     .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween

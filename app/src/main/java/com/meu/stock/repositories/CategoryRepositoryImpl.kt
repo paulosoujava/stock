@@ -2,14 +2,13 @@ package com.meu.stock.repositories
 
 
 import com.meu.stock.contracts.ICategoryRepository
-import com.meu.stock.data.category.CategoryDao
+import com.meu.stock.bd.category.CategoryDao
 import com.meu.stock.mappers.toCategory
 import com.meu.stock.mappers.toEntity
 import com.meu.stock.model.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import kotlin.concurrent.atomics.update
 
 class CategoryRepositoryImpl @Inject constructor(
     private val categoryDao: CategoryDao

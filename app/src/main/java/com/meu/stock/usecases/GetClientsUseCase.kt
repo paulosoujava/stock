@@ -2,9 +2,8 @@ package com.meu.stock.usecases
 
 import com.meu.stock.contracts.IClientRepository
 import com.meu.stock.contracts.IGetClientsUseCase
-import com.meu.stock.repositories.ClientRepositoryImpl
 import com.meu.stock.model.Client
-import com.meu.stock.data.client.ClientEntity
+import com.meu.stock.bd.client.ClientEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

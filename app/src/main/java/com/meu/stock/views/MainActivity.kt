@@ -1,7 +1,6 @@
-package com.meu.stock
+package com.meu.stock.views
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -79,11 +78,19 @@ fun AppNavigation() {
                 navArgument("isSelectionMode") {
                     type = NavType.BoolType
                     defaultValue = false
+                },
+                navArgument("searchQuery") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
                 }
             )
         ) { backStackEntry ->
             val isSelectionMode = backStackEntry.arguments?.getBoolean("isSelectionMode") ?: false
-            ClientListScreen(navController = navController, isSelectionMode)
+            val clientNameToExpand = backStackEntry.arguments?.getString("searchQuery")
+
+            Log.d("ROUTE", AppRoutes.CLIENT_LIST )
+            ClientListScreen(navController = navController, isSelectionMode, clientNameToExpand)
         }
 
         composable(
