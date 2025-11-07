@@ -76,6 +76,9 @@ dependencies {
     implementation("androidx.camera:camera-view:${cameraxVersion}")
     implementation("com.google.guava:guava:33.1.0-android")
 
+    // Coil para carregamento de imagens
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
     // Core e UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.material.icons.extended)

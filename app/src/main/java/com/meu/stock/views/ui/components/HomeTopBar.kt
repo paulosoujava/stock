@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Storefront
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 fun HomeTopBar(
     modifier: Modifier = Modifier,
     onQrcanClick: () -> Unit,
+    onPromoListClick: () -> Unit,
     onLogoutClick: () -> Unit,
 ) {
     TopAppBar(
@@ -44,10 +46,20 @@ fun HomeTopBar(
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
+            IconButton(onClick = onPromoListClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "Promoção do App",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = 16.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
             IconButton(onClick = onLogoutClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
-                    contentDescription = "App Logo",
+                    contentDescription = "Sair do App",
                     modifier = Modifier
                         .size(40.dp)
                         .padding(end = 16.dp),

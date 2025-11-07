@@ -9,12 +9,14 @@ import com.meu.stock.contracts.IGetClientsUseCase
 import com.meu.stock.contracts.IGetTotalClientsUseCase
 import com.meu.stock.contracts.INoteRepository
 import com.meu.stock.contracts.IProductRepository
+import com.meu.stock.contracts.IPromoRepository
 import com.meu.stock.contracts.ISaleHistoryRepository
 import com.meu.stock.repositories.AlarmSchedulerImpl
 import com.meu.stock.repositories.CategoryRepositoryImpl
 import com.meu.stock.repositories.ClientRepositoryImpl
 import com.meu.stock.repositories.NoteRepositoryImpl
 import com.meu.stock.repositories.ProductRepositoryImpl
+import com.meu.stock.repositories.PromoRepositoryImpl
 import com.meu.stock.repositories.SaleHistoryRepositoryImpl
 import com.meu.stock.usecases.GetClientsUseCase
 import com.meu.stock.usecases.GetTotalClientsUseCase
@@ -29,6 +31,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class InterfacesModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindPromoRepository(
+        promoRepositoryImpl: PromoRepositoryImpl
+    ): IPromoRepository
+
 
     @Binds
     @Singleton

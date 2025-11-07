@@ -11,6 +11,7 @@ import com.meu.stock.bd.category.CategoryDao
 import com.meu.stock.bd.client.ClientDao
 import com.meu.stock.bd.note.NoteDao
 import com.meu.stock.bd.product.ProductDao
+import com.meu.stock.bd.promo.PromoDao
 import com.meu.stock.bd.sale.SaleHistoryDao
 import com.meu.stock.repositories.AuthRepositoryImpl
 import dagger.Module
@@ -68,6 +69,10 @@ object AppModule {
         return database.productDao()
     }
 
+    @Provides
+     fun providePromoDao(database: AppDatabase) : PromoDao{
+        return database.promoDao();
+    }
     @Provides
     @Singleton
     fun provideGson(): Gson = Gson()

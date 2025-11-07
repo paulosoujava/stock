@@ -4,10 +4,12 @@ import com.meu.stock.bd.category.CategoryEntity
 import com.meu.stock.bd.client.ClientEntity
 import com.meu.stock.bd.note.NoteEntity
 import com.meu.stock.bd.product.ProductEntity
+import com.meu.stock.bd.promo.PromoEntity
 import com.meu.stock.model.Category
 import com.meu.stock.model.Client
 import com.meu.stock.model.Note
 import com.meu.stock.model.Product
+import com.meu.stock.model.Promo
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -122,6 +124,32 @@ fun Note.toNoteEntity(): NoteEntity {
 }
 
 /**
+ * Converte a entidade de banco de dados (PromoEntity) para o modelo de domínio (Promo).
+ */
+fun PromoEntity.toPromo(): Promo {
+    return Promo(
+        id = this.id,
+        imageUri = this.imageUri,
+        title = this.title,
+        desc = this.desc,
+        price = this.price
+    )
+}
+
+/**
+ * Converte o modelo de domínio (Promo) para a entidade de banco de dados (PromoEntity).
+ */
+fun Promo.toEntity(): PromoEntity {
+    return PromoEntity(
+        id = this.id,
+        imageUri = this.imageUri,
+        title = this.title,
+        desc = this.desc,
+        price = this.price
+    )
+}
+
+/**
  * Função de extensão auxiliar para formatar um objeto Date para uma string legível.
  * Exemplo: "25 de out de 2025, 19:30"
  */
@@ -131,5 +159,4 @@ private fun Date.toFormattedString(): String {
     )
     return format.format(this)
 }
-
 

@@ -117,6 +117,9 @@ fun HomeScreen(
                     onLogoutClick = { homeViewModel.onLogoutIconClick() },
                     onQrcanClick = {
                         navController.navigate(AppRoutes.SCANNER)
+                    },
+                    onPromoListClick = {
+                        navController.navigate(AppRoutes.PROMO_LIST)
                     }
                 )
                 HorizontalDivider()

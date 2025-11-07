@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.meu.stock.di.InternalStorageManager
 import com.meu.stock.model.Product
 import com.meu.stock.usecases.DeleteProductUseCase
 import com.meu.stock.usecases.GetProductByIdUseCase

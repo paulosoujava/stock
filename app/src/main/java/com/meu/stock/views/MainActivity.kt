@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.meu.stock.ui.theme.StockTheme
 import com.meu.stock.views.ui.print.PrintScreen
+import com.meu.stock.views.ui.promo.create.PromoFormScreen
+import com.meu.stock.views.ui.promo.list.PromoListScreen
 import com.meu.stock.views.ui.readQrcode.ScannerScreen
 import com.meu.stock.views.ui.routes.AppRoutes
 import com.meu.stock.views.ui.screens.clients.create.ClientScreen
@@ -89,7 +91,7 @@ fun AppNavigation() {
             val isSelectionMode = backStackEntry.arguments?.getBoolean("isSelectionMode") ?: false
             val clientNameToExpand = backStackEntry.arguments?.getString("searchQuery")
 
-            Log.d("ROUTE", AppRoutes.CLIENT_LIST )
+            Log.d("ROUTE", AppRoutes.CLIENT_LIST)
             ClientListScreen(navController = navController, isSelectionMode, clientNameToExpand)
         }
 
@@ -173,8 +175,10 @@ fun AppNavigation() {
                 navArgument("categoryId") { type = NavType.StringType; nullable = true },
             )
         ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name")?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
-            val desc = backStackEntry.arguments?.getString("desc")?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
+            val name = backStackEntry.arguments?.getString("name")
+                ?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
+            val desc = backStackEntry.arguments?.getString("desc")
+                ?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.toString()) }
             val price = backStackEntry.arguments?.getString("price")
             val id = backStackEntry.arguments?.getString("id")
             val categoryId = backStackEntry.arguments?.getString("categoryId")
@@ -185,7 +189,7 @@ fun AppNavigation() {
                 productDescription = desc,
                 productPrice = price,
                 productId = id,
-                categoryId= categoryId
+                categoryId = categoryId
             )
         }
 
@@ -199,7 +203,10 @@ fun AppNavigation() {
                     val productId = params["productId"]
                     val categoryId = params["categoryId"]
 
-                    Log.d("ScannerScreen", "${AppRoutes.PRODUCT_FORM}?productId=$productId&categoryId=$categoryId")
+                    Log.d(
+                        "ScannerScreen",
+                        "${AppRoutes.PRODUCT_FORM}?productId=$productId&categoryId=$categoryId"
+                    )
 
                     navController.navigate("${AppRoutes.PRODUCT_FORM}?productId=$productId&categoryId=$categoryId") {
                         popUpTo(AppRoutes.SCANNER) { inclusive = true }
@@ -219,9 +226,25 @@ fun AppNavigation() {
                 nullable = true
             })
         ) { backStackEntry ->
-             NoteFormScreen(
-                 navController = navController,
+            NoteFormScreen(
+                navController = navController,
             )
+        }
+
+        composable(AppRoutes.PROMO_LIST) {
+            PromoListScreen(navController = navController)
+        }
+
+        composable(
+            AppRoutes.PROMO_FORM,
+            arguments = listOf(
+                // Define o argumento, seu tipo e um valor padrão
+                navArgument(AppRoutes.PROMO_ID_ARG) {
+                    type = NavType.LongType
+                    defaultValue = -1L // Valor padrão para quando estiver criando uma nova promo
+                }
+            )) {
+            PromoFormScreen(navController = navController)
         }
     }
 }
