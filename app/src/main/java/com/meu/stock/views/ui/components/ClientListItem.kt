@@ -40,6 +40,7 @@ import com.meu.stock.views.ui.utils.CpfVisualTransformation
 import com.meu.stock.views.ui.utils.PhoneVisualTransformation
 import com.meu.stock.views.ui.utils.generateRandomPastelColor
 import androidx.core.net.toUri
+import java.net.URLEncoder
 
 
 @Preview(
@@ -161,6 +162,12 @@ fun ClientListItem(
                         InfoRow(
                             icon = Icons.Default.AddLocation,
                             text = client.address,
+                            onClick = {
+                                val encodedAddress = URLEncoder.encode(client.address, "UTF-8")
+                                val mapUri = "geo:0,0?q=$encodedAddress".toUri()
+                                val intent = Intent(Intent.ACTION_VIEW, mapUri)
+                                context.startActivity(intent)
+                            }
                         )
 
                         InfoRow(
