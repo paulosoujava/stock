@@ -1,10 +1,9 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.clients
 
 
 
 import com.meu.stock.contracts.IClientRepository
 import com.meu.stock.contracts.IGetClientByIdUseCase
-import com.meu.stock.contracts.IGetClientsUseCase
 import com.meu.stock.mappers.toClient
 import com.meu.stock.model.Client
 import kotlinx.coroutines.flow.Flow

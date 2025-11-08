@@ -2,9 +2,9 @@ package com.meu.stock.views.ui.screens.clients.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.repositories.ClientRepositoryImpl
-import com.meu.stock.bd.client.ClientEntity
-import com.meu.stock.usecases.GetClientByIdUseCase
+import com.meu.stock.model.Client
+import com.meu.stock.usecases.clients.GetClientByIdUseCase
+import com.meu.stock.usecases.clients.SaveClientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClientViewModel @Inject constructor(
     private val getClientByIdUseCase: GetClientByIdUseCase,
-    private val clientRepository: ClientRepositoryImpl
+    private val saveClientUseCase: SaveClientUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ClientState())
@@ -50,6 +50,7 @@ class ClientViewModel @Inject constructor(
                                 email = client.email,
                                 cpf = client.cpf,
                                 notes = client.notes,
+                                address = client.address,
                                 isLoading = false
                             )
                         }
@@ -78,7 +79,9 @@ class ClientViewModel @Inject constructor(
     fun onNotesChange(notes: String) {
         _uiState.update { it.copy(notes = notes) }
     }
-
+    fun onAddressChange(address: String){
+        _uiState.update { it.copy(address = address) }
+    }
     fun onSaveClientClick() {
         viewModelScope.launch {
             val currentState = _uiState.value
@@ -89,21 +92,23 @@ class ClientViewModel @Inject constructor(
 
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            val clientEntity = ClientEntity(
-                fullName = currentState.fullName.trim(),
+            val client = Client(
+                id = currentState.id.toLongOrNull() ?: 0,
+                name = currentState.fullName.trim(),
                 cpf = currentState.cpf.trim(),
                 phone = currentState.phone.trim(),
                 email = currentState.email.trim(),
-                notes = currentState.notes.trim()
+                notes = currentState.notes.trim(),
+                address = currentState.address.trim(),
             )
             //para a ediçao
             if(currentState.id.isNotBlank()) {
-                clientEntity.id = currentState.id.toLong()
+                client.id = currentState.id.toLong()
             }
 
 
             try {
-                clientRepository.saveClient(clientEntity)
+                saveClientUseCase(client)
                 _uiState.update { it.copy(isLoading = false, saveSuccess = true) }
             } catch (e: Exception) {
                 _uiState.update {

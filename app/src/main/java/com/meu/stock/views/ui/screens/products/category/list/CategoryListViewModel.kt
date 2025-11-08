@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.meu.stock.contracts.ICategoryRepository
 import com.meu.stock.contracts.IProductRepository
 import com.meu.stock.model.Category
-import com.meu.stock.usecases.GetCategoriesUseCase
+import com.meu.stock.usecases.categories.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

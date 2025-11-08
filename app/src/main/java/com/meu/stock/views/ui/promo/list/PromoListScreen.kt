@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.collectLatest
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.text.toDoubleOrNull
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -316,7 +317,7 @@ private fun sendWhatsAppMessage(context: Context, promo: Promo) {
 
         if (promo.imageUri != null) {
             type = "image/*"
-            val imageUri = Uri.parse(promo.imageUri)
+            val imageUri = promo.imageUri.toUri()
             putExtra(Intent.EXTRA_STREAM, imageUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         } else {

@@ -1,12 +1,10 @@
 package com.meu.stock.views.ui.promo.create
 
-import android.net.Uri
-import androidx.activity.result.launch
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.usecases.GetPromoByIdUseCase
-import com.meu.stock.usecases.SavePromoUseCase
+import com.meu.stock.usecases.promo.GetPromoByIdUseCase
+import com.meu.stock.usecases.promo.SavePromoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,10 +42,16 @@ class PromoFormViewModel @Inject constructor(
     fun sendEvent(event: PromoFormContract.Event) {
         when (event) {
             is PromoFormContract.Event.OnImageUriChanged -> {
-                event.uri?.let { newUri ->
-                    // Copia a imagem e atualiza o estado com a URI INTERNA
-                    val internalUri = storageManager.copyImageToInternalStorage(newUri)
-                    _state.update { it.copy(imageUri = internalUri) }
+                val originalUri = event.uri
+                if (originalUri == null) {
+                    _state.update { it.copy(imageUri = null) }
+                    return
+                }
+
+                viewModelScope.launch {
+                    _state.update { it.copy(isImageLoading = true) }
+                    val internalUri = storageManager.copyImageToInternalStorage(originalUri)
+                    _state.update { it.copy(imageUri = internalUri, isImageLoading = false) }
                 }
             }
             is PromoFormContract.Event.OnTitleChanged -> {

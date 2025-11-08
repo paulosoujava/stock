@@ -4,8 +4,8 @@ package com.meu.stock.views.ui.promo.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meu.stock.model.Promo
-import com.meu.stock.usecases.DeletePromoUseCase
-import com.meu.stock.usecases.GetAllPromosUseCase
+import com.meu.stock.usecases.promo.DeletePromoUseCase
+import com.meu.stock.usecases.promo.GetAllPromosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

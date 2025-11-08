@@ -1,4 +1,4 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.note
 
 import com.meu.stock.contracts.INoteRepository
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.product
 
 import com.meu.stock.contracts.IProductRepository
 import com.meu.stock.model.Product

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
@@ -63,7 +64,8 @@ private fun Show() {
                     phone = "(11) 98765-4321",
                     email = "william.henry.moody@my-own-personal-domain.com",
                     notes = "Cliente padrão com notas.",
-                    id = 1
+                    id = 1,
+                    address = ""
                 ),
                 isSelectionMode = false,
                 onEditClick = { },
@@ -157,10 +159,16 @@ fun ClientListItem(
                     ) {
                         InfoRow(icon = Icons.Default.Person, text = formattedCpf)
                         InfoRow(
+                            icon = Icons.Default.AddLocation,
+                            text = client.address,
+                        )
+
+                        InfoRow(
                             icon = Icons.Default.Phone,
                             text = formattedPhone,
                             onClick = {
-                                val intent = Intent(Intent.ACTION_DIAL, "tel:${client.phone}".toUri())
+                                val intent =
+                                    Intent(Intent.ACTION_DIAL, "tel:${client.phone}".toUri())
                                 context.startActivity(intent)
                             }
                         )
@@ -181,7 +189,8 @@ fun ClientListItem(
                             onClick = {
                                 try {
                                     val internationalNumber = "55${client.phone}"
-                                    val url = "https://api.whatsapp.com/send?phone=$internationalNumber"
+                                    val url =
+                                        "https://api.whatsapp.com/send?phone=$internationalNumber"
                                     val intent = Intent(Intent.ACTION_VIEW).apply {
                                         data = url.toUri()
                                     }
@@ -191,9 +200,12 @@ fun ClientListItem(
                                 }
                             }
                         )
+
+
+
                         if (client.notes.isNotBlank()) {
                             InfoRow(
-                                icon = Icons.Default.Notes,
+                                icon = Icons.AutoMirrored.Filled.Notes,
                                 text = client.notes,
                                 isLast = true
                             )
@@ -281,7 +293,7 @@ private fun InfoRow(
             )
         }
         if (!isLast)
-            HorizontalDivider( modifier = Modifier.padding(top = 10.dp))
+            HorizontalDivider(modifier = Modifier.padding(top = 10.dp))
     }
 
 }

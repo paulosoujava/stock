@@ -1,4 +1,4 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.clients
 
 import com.meu.stock.contracts.IClientRepository
 import com.meu.stock.contracts.IGetClientsUseCase
@@ -29,6 +29,7 @@ private fun ClientEntity.toClient(): Client {
         phone = this.phone,
         email = this.email,
         cpf = this.cpf,
-        notes = this.notes
+        notes = this.notes,
+        address = this.address
     )
 }

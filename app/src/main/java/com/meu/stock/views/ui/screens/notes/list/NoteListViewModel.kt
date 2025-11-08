@@ -2,7 +2,7 @@ package com.meu.stock.views.ui.screens.notes.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.usecases.GetNotesUseCase
+import com.meu.stock.usecases.note.GetNotesUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

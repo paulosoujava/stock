@@ -1,4 +1,4 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.clients
 
 
 import com.meu.stock.contracts.IClientRepository

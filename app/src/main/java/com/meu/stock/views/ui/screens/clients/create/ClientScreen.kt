@@ -99,6 +99,14 @@ fun ClientScreen(
             }
             item {
                 AppTextArea(
+                    value = uiState.address,
+                    onValueChange = clientViewModel::onAddressChange,
+                    label = "Endereço completo",
+                    enabled = !uiState.isLoading
+                )
+            }
+            item {
+                AppTextArea(
                     value = uiState.notes,
                     onValueChange = clientViewModel::onNotesChange,
                     label = "Texto Livre (Observações)",

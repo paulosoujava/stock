@@ -106,8 +106,9 @@ fun PromoFormScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()) // Permite rolagem
-                .fillMaxSize(),
+                .imePadding()
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(16.dp))
@@ -115,6 +116,7 @@ fun PromoFormScreen(
             // Componente de Imagem
             ImageSelector(
                 selectedUri = state.imageUri,
+                isLoading = state.isImageLoading,
                 onClick = {
                     // Lança o seletor de mídia para imagens
                     photoPickerLauncher.launch(
@@ -186,6 +188,7 @@ fun PromoFormScreen(
     }
 }
 
+/*
 @Composable
 private fun ImageSelector(
     selectedUri: Uri?,
@@ -229,6 +232,51 @@ private fun ImageSelector(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold
                 )
+            }
+        }
+    }
+}
+
+*/
+
+@Composable
+private fun ImageSelector(
+    selectedUri: Uri?,
+    isLoading: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            if (selectedUri != null) {
+                AsyncImage(
+                    model = selectedUri,
+                    error = painterResource(id = R.drawable.error_image),
+                    placeholder = painterResource(id = R.drawable.loading),
+                    contentDescription = "Imagem da Promoção",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(
+                        imageVector = Icons.Default.AddAPhoto,
+                        contentDescription = "Adicionar Foto",
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Text("Toque para adicionar uma imagem")
+                }
             }
         }
     }

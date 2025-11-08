@@ -16,5 +16,6 @@ data class ClientEntity(
     val cpf: String,
     val phone: String,
     val email: String,
-    val notes: String
+    val notes: String,
+    val address: String,
 )

@@ -1,4 +1,4 @@
-package com.meu.stock.usecases
+package com.meu.stock.usecases.categories
 
 import com.meu.stock.contracts.ICategoryRepository
 import com.meu.stock.model.Category

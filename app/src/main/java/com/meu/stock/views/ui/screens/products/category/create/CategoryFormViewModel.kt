@@ -5,10 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meu.stock.model.Category
-import com.meu.stock.usecases.GetCategoryByIdUseCase
-import com.meu.stock.usecases.SaveCategoryUseCase
+import com.meu.stock.usecases.categories.GetCategoryByIdUseCase
+import com.meu.stock.usecases.categories.SaveCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

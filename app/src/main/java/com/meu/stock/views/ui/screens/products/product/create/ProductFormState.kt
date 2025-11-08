@@ -15,6 +15,7 @@ data class ProductFormState(
     val priceSale: String = "",
     val categoryId: Long? = null, // ID da categoria à qual o produto pertence
 
+
     // Controle da UI
     val isLoading: Boolean = false,
     val saveSuccess: Boolean = false,

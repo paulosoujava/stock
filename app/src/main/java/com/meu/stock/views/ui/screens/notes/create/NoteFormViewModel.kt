@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meu.stock.contracts.IAlarmScheduler
 import com.meu.stock.model.Note
-import com.meu.stock.usecases.DeleteNoteUseCase
-import com.meu.stock.usecases.GetNoteByIdUseCase
-import com.meu.stock.usecases.SaveNoteUseCase
+import com.meu.stock.usecases.note.DeleteNoteUseCase
+import com.meu.stock.usecases.note.GetNoteByIdUseCase
+import com.meu.stock.usecases.note.SaveNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale

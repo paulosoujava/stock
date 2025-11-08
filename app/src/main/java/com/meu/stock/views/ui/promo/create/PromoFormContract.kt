@@ -18,7 +18,8 @@ object PromoFormContract {
         val description: String = "",
         val price: String = "",
         val isLoading: Boolean = false,
-        val errorMessage: String? = null
+        val errorMessage: String? = null,
+        val isImageLoading: Boolean = false,
     )
 
     sealed interface Event {

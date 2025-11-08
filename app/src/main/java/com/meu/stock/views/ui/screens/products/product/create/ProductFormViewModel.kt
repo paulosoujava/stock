@@ -4,11 +4,10 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.di.InternalStorageManager
 import com.meu.stock.model.Product
-import com.meu.stock.usecases.DeleteProductUseCase
-import com.meu.stock.usecases.GetProductByIdUseCase
-import com.meu.stock.usecases.SaveProductUseCase
+import com.meu.stock.usecases.product.DeleteProductUseCase
+import com.meu.stock.usecases.product.GetProductByIdUseCase
+import com.meu.stock.usecases.product.SaveProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

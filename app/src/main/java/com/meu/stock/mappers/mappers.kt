@@ -10,6 +10,7 @@ import com.meu.stock.model.Client
 import com.meu.stock.model.Note
 import com.meu.stock.model.Product
 import com.meu.stock.model.Promo
+import com.meu.stock.views.ui.utils.toFormattedString
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -27,10 +28,28 @@ internal fun ClientEntity.toClient(): Client {
         phone = this.phone,
         email = this.email,
         cpf = this.cpf,
-        notes = this.notes
+        notes = this.notes,
+        address = this.address
+    )
+}
+/**
+ * Converte um objeto da camada de domínio (Model) para a camada de dados (Entity).
+ */
+fun Client.toEntity(): ClientEntity {
+    return ClientEntity(
+        id = this.id,
+        fullName = this.name,
+        phone = this.phone,
+        email = this.email,
+        cpf = this.cpf,
+        notes = this.notes,
+        address = this.address
     )
 }
 
+/**
+ *
+ */
 /**
  * Converte um objeto da camada de dados (CategoryEntity) para um objeto
  * da camada de domínio/UI (Category).
@@ -100,7 +119,7 @@ fun NoteEntity.toNote(): Note {
         content = this.content,
         reminderDate = this.reminderDate,
         reminderTime = this.reminderTime,
-        lastUpdated = this.updatedAt.toFormattedString() // Formata a data para exibição
+        lastUpdated = this.updatedAt.toFormattedString()
     )
 }
 
@@ -149,14 +168,6 @@ fun Promo.toEntity(): PromoEntity {
     )
 }
 
-/**
- * Função de extensão auxiliar para formatar um objeto Date para uma string legível.
- * Exemplo: "25 de out de 2025, 19:30"
- */
-private fun Date.toFormattedString(): String {
-    val format = SimpleDateFormat("dd 'de' MMM 'de' yyyy, HH:mm",
-        java.util.Locale("pt", "BR")
-    )
-    return format.format(this)
-}
+
+
 

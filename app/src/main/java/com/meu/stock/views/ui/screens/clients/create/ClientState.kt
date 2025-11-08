@@ -7,6 +7,7 @@ package com.meu.stock.views.ui.screens.clients.create
  * @param cpf The client's CPF document number.
  * @param phone The client's phone number.
  * @param email The client's email address.
+ * @param address A address the client lives at.
  * @param notes A free text field for additional notes.
  * @param isLoading Indicates if a save operation is in progress.
  * @param saveSuccess Indicates if the client was saved successfully.
@@ -19,6 +20,7 @@ data class ClientState(
     val phone: String = "",
     val email: String = "",
     val notes: String = "",
+    val address: String = "",
     val isLoading: Boolean = false,
     val saveSuccess: Boolean = false,
     val errorMessage: String? = null

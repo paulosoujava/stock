@@ -18,8 +18,8 @@ import com.meu.stock.repositories.NoteRepositoryImpl
 import com.meu.stock.repositories.ProductRepositoryImpl
 import com.meu.stock.repositories.PromoRepositoryImpl
 import com.meu.stock.repositories.SaleHistoryRepositoryImpl
-import com.meu.stock.usecases.GetClientsUseCase
-import com.meu.stock.usecases.GetTotalClientsUseCase
+import com.meu.stock.usecases.clients.GetClientsUseCase
+import com.meu.stock.usecases.clients.GetTotalClientsUseCase
 
 
 import dagger.Binds

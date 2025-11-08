@@ -3,7 +3,7 @@ package com.meu.stock.views.ui.screens.sellers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meu.stock.usecases.GetBestSellingItemsUseCase
+import com.meu.stock.usecases.selling.GetBestSellingItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
